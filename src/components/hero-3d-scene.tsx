@@ -3,7 +3,8 @@
 import React, { useRef, useState, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, Float, PresentationControls, Environment, ContactShadows, Stars } from "@react-three/drei";
-import { Vector3, MathUtils } from "three";
+// Import the Mesh type from three here
+import { Mesh, Vector3, MathUtils } from "three";
 
 interface TechLogoProps {
   position: [number, number, number];
@@ -13,11 +14,12 @@ interface TechLogoProps {
 }
 
 function TechLogo({ position, color, logoName, size = 0.5 }: TechLogoProps) {
-  const meshRef = useRef<THREE.Mesh>(null);
+  // Use Mesh instead of THREE.Mesh
+  const meshRef = useRef<Mesh | null>(null);
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
-  
-  useFrame((state) => {
+
+  useFrame(() => {
     if (meshRef.current) {
       meshRef.current.scale.x = MathUtils.lerp(
         meshRef.current.scale.x,
@@ -26,15 +28,14 @@ function TechLogo({ position, color, logoName, size = 0.5 }: TechLogoProps) {
       );
       meshRef.current.scale.y = meshRef.current.scale.x;
       meshRef.current.scale.z = meshRef.current.scale.x;
-      
       meshRef.current.rotation.y += 0.01;
       if (hovered) meshRef.current.rotation.z += 0.02;
     }
   });
-  
+
   return (
     <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
-      <mesh 
+      <mesh
         ref={meshRef}
         position={position}
         onPointerOver={() => setHovered(true)}
@@ -42,7 +43,6 @@ function TechLogo({ position, color, logoName, size = 0.5 }: TechLogoProps) {
         onPointerDown={() => setClicked(true)}
         onPointerUp={() => setClicked(false)}
       >
-        {}
         {logoName === "React" ? (
           <torusGeometry args={[size, size/4, 16, 32]} />
         ) : logoName === "Next.js" ? (
