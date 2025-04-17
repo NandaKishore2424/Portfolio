@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import Projects from '@/components/sections/projects';
 import Navbar from '@/components/ui/navbar';
