@@ -4,7 +4,15 @@ import React, { useRef, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, Float, PresentationControls, Text, useGLTF, Environment, ContactShadows, Stars } from "@react-three/drei";
 
-function CodeBlock({ position, rotation, scale, color, text }) {
+interface CodeBlockProps {
+  position: [number, number, number];
+  rotation: [number, number, number];
+  scale: number;
+  color: string;
+  text: string;
+}
+
+function CodeBlock({ position, rotation, scale, color, text }: CodeBlockProps) {
   return (
     <Float
       speed={1.5} 
@@ -28,7 +36,7 @@ function CodeBlock({ position, rotation, scale, color, text }) {
           className="w-44 h-44 flex items-center justify-center"
           style={{ pointerEvents: 'none' }}
         >
-          <div className="bg-transparent p-2 text-[8px] font-mono" style={{ color: '#ffffff' }}>
+          <div className="bg-transparent p-2 text-[8px] font-mono" style={{ color }}>
             {text.split('\n').map((line, i) => (
               <div key={i}>{line}</div>
             ))}
