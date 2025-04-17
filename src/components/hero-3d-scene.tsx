@@ -4,7 +4,7 @@ import React, { useRef, useState, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, Float, PresentationControls, Environment, ContactShadows, Stars } from "@react-three/drei";
 // Import the Mesh type from three here
-import { Mesh, Vector3, MathUtils } from "three";
+import { Mesh, Vector3, MathUtils, Group } from "three";
 
 interface TechLogoProps {
   position: [number, number, number];
@@ -87,9 +87,9 @@ function TechLogo({ position, color, logoName, size = 0.5 }: TechLogoProps) {
 }
 
 function TechLogoOrbit() {
-  const groupRef = useRef<THREE.Group>(null);
-  
-  useFrame((state) => {
+  const groupRef = useRef<Group | null>(null);
+
+  useFrame(() => {
     if (groupRef.current) {
       groupRef.current.rotation.y += 0.001;
     }
