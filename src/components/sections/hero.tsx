@@ -97,7 +97,7 @@ export default function Hero() {
           {/* Three.js 3D Scene */}
           <div 
             className={cn(
-              "hidden lg:block relative transition-all duration-1000",
+              "lg:block relative transition-all duration-1000 min-h-[500px]", // Add min-height
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-24"
             )}
             style={{ transitionDelay: "600ms" }}
