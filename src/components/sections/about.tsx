@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, Award, GraduationCap, Code } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ArrowRight, Award, GraduationCap } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function About() {
   const stats = [
@@ -52,7 +52,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-24">
+    <motion.section id="about" className="py-24">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
@@ -166,6 +166,6 @@ export default function About() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

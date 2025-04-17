@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Github, Linkedin, Mail, ArrowUp } from "lucide-react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 
 export default function Footer() {
   const scrollToTop = () => {

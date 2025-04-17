@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Html, Float, OrbitControls, PresentationControls, Text, useGLTF, Environment, ContactShadows } from "@react-three/drei";
+import { Html, Float, PresentationControls, Text, useGLTF, Environment, ContactShadows, Stars } from "@react-three/drei";
 
 function CodeBlock({ position, rotation, scale, color, text }) {
   return (
@@ -36,104 +36,6 @@ function CodeBlock({ position, rotation, scale, color, text }) {
         </Html>
       </mesh>
     </Float>
-  );
-}
-
-function LaptopModel({ position = [0, -0.1, 0], scale = 0.8 }) {  
-  const laptop = useRef();
-  const { scene } = useGLTF("/models/laptop.glb");
-  
-  useFrame((state) => {
-    if (laptop.current) {
-      laptop.current.position.y = position[1] + Math.sin(state.clock.getElapsedTime() * 0.5) * 0.02;  // Reduced movement
-    }
-  });
-
-  return (
-    <primitive 
-      ref={laptop}
-      object={scene} 
-      position={position} 
-      scale={[scale, scale, scale]}
-      dispose={null}
-    />
-  );
-}
-
-function FloatingParticles({ count = 50 }) {
-  const mesh = useRef();
-  const [particles] = useState(() => {
-    const temp = [];
-    for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * 10;
-      const y = (Math.random() - 0.5) * 10;
-      const z = (Math.random() - 0.5) * 10;
-      temp.push({ position: [x, y, z], speed: Math.random() * 0.01 });
-    }
-    return temp;
-  });
-
-  useFrame(() => {
-    if (mesh.current) {
-      mesh.current.rotation.x += 0.001;
-      mesh.current.rotation.y += 0.002;
-    }
-  });
-
-  return (
-    <group ref={mesh}>
-      {particles.map((particle, i) => (
-        <mesh key={i} position={particle.position}>
-          <sphereGeometry args={[0.05, 16, 16]} />
-          <meshStandardMaterial 
-            color="#4285F4" 
-            transparent 
-            opacity={0.6}
-            emissive="#4285F4"
-            emissiveIntensity={0.2}
-          />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-function SpinningTechStack({ position }) {
-  const group = useRef();
-  const technologies = [
-    { name: "React", color: "#61DAFB" },
-    { name: "Next.js", color: "#000000" },
-    { name: "TypeScript", color: "#3178C6" },
-    { name: "Python", color: "#3776AB" },
-    { name: "TensorFlow", color: "#FF6F00" }
-  ];
-
-  useFrame((state) => {
-    if (group.current) {
-      group.current.rotation.y = state.clock.getElapsedTime() * 0.2;
-    }
-  });
-
-  return (
-    <group ref={group} position={position}>
-      {technologies.map((tech, i) => {
-        const angle = (i / technologies.length) * Math.PI * 2;
-        const x = Math.cos(angle) * 2;
-        const z = Math.sin(angle) * 2;
-        return (
-          <Float key={i} position={[x, 0, z]} speed={1.5} rotationIntensity={1} floatIntensity={0.5}>
-            <Text
-              fontSize={0.3}
-              color={tech.color}
-              anchorX="center"
-              anchorY="middle"
-            >
-              {tech.name}
-            </Text>
-          </Float>
-        );
-      })}
-    </group>
   );
 }
 
@@ -228,6 +130,7 @@ export default function Hero3DScene() {
             
             {/* Environment lighting for better materials */}
             <Environment preset="sunset" intensity={0.5} />
+            <Stars/>
           </PresentationControls>
         </Suspense>
         
