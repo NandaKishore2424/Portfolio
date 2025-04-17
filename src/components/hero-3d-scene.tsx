@@ -142,16 +142,11 @@ export default function Hero3DScene() {
           </mesh>
         }>
           <PresentationControls
-            global
             rotation={[0, 0, 0]}
-            polar={[-Math.PI / 4, Math.PI / 4]} 
-            azimuth={[-Math.PI / 2, Math.PI / 2]}
-            config={{ mass: 2, tension: 150, friction: 30 }} 
-            snap={false}
           >
             <TechLogoOrbit /> 
             
-            <Environment preset="sunset" intensity={0.5} />
+            <Environment preset="sunset" />
             <Stars 
               radius={100}
               depth={50}
