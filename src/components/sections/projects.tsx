@@ -16,7 +16,7 @@ const projects = [
     category: "ai",
     tags: ["React", "Node.js", "MongoDB", "Express", "JWT", "Gemini PaLM API", "Tailwind CSS", "MERN Stack"],
     demoLink: null,
-    sourceLink: "https://github.com/NandaKishore2424/Novanest_AI_Incubation"
+    sourceLink: "https://github.com/NandaKishore2424/novanest"
   },
   {
     id: "trainee-management",
@@ -60,7 +60,7 @@ const projects = [
     category: "web",
     tags: ["React", "Redux Toolkit", "Node.js", "Express", "MongoDB", "Responsive Design", "Real-time Updates"],
     demoLink: null,
-    sourceLink: "https://github.com/NandaKishore2424/Calendar_Application"
+    sourceLink: "https://github.com/NandaKishore2424/Calendar_application"
   }
 ];
 
