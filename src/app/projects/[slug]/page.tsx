@@ -33,6 +33,11 @@ export async function generateMetadata({ params }: PageProps<"/projects/[slug]">
       description: cs.headline,
       url: `${profile.siteUrl}/projects/${project.slug}`,
     },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.name} · ${profile.name}`,
+      description: cs.headline,
+    },
   };
 }
 
