@@ -1,184 +1,120 @@
 "use client";
 
-import { Briefcase, Calendar, Code, GraduationCap } from "lucide-react";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
+import { Building2, CalendarRange, MapPin } from "lucide-react";
+import { experience, type Highlight } from "@/content/experience";
+import { SectionHeading } from "@/components/section-heading";
+import { Timeline } from "@/components/ui/timeline";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { TenantsVisual } from "@/components/visuals/tenants-visual";
+import { RaceVisual } from "@/components/visuals/race-visual";
+import { ChecksVisual } from "@/components/visuals/checks-visual";
+import { DiffVisual } from "@/components/visuals/diff-visual";
 
-export default function Experience() {
-  const experiences = [
-    {
-      id: "freelance",
-      title: "Freelance Developer",
-      company: "Self-employed",
-      location: "Remote",
-      startDate: "Jan 2023",
-      endDate: "Present",
-      current: true,
-      description: [
-        "Developed and deployed full-stack web applications for various clients",
-        "Created the RSChemtutor website for a specialized chemistry tutor using React and Tailwind CSS",
-        "Implemented responsive designs and performance optimizations for client websites",
-        "Maintained client relationships and delivered projects on time"
-      ],
-      skills: ["React", "Next.js", "Tailwind CSS", "TypeScript", "Responsive Design"]
-    },
-    {
-      id: "training",
-      title: "In-plant Training",
-      company: "Zealsoft Technology Solutions",
-      location: "Chennai",
-      startDate: "Jun 2023",
-      endDate: "Aug 2023",
-      description: [
-        "Participated in comprehensive web development training program",
-        "Worked on real-time projects under professional guidance",
-        "Gained hands-on experience with industry standard development practices",
-        "Collaborated with team members on project development and problem solving",
-        "Applied theoretical knowledge to practical business scenarios"
-      ],
-      skills: ["Web Development", "Team Collaboration", "Problem Solving", "Industry Standards"]
-    }
-  ];
-  
-  const [activeTab, setActiveTab] = useState<string>(experiences[0].id);
-  
+function Visual({ h }: { h: Highlight }) {
+  switch (h.visual) {
+    case "tenants":
+      return <TenantsVisual />;
+    case "race":
+      return <RaceVisual />;
+    case "checks":
+      return <ChecksVisual checks={h.checks ?? []} tests={Number(h.metric?.value ?? 0)} />;
+    case "diff":
+      return <DiffVisual diff={h.diff ?? []} />;
+  }
+}
+
+function HighlightCard({ h }: { h: Highlight }) {
   return (
-    <section 
-      id="experience" 
-      className="py-24 relative overflow-hidden"
+    <motion.article
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-120px" }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="relative rounded-2xl border border-line p-1.5"
     >
-      {/* Decorative cosmic elements */}
-      <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-violet-400/10 blur-3xl" />
-      <div className="absolute bottom-20 right-40 w-80 h-80 rounded-full bg-purple-500/10 blur-3xl" />
-      <div className="absolute top-1/2 left-1/3 w-40 h-40 rounded-full bg-indigo-400/10 blur-2xl" />
-      
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Professional Experience</h2>
-          <div className="w-24 h-1 bg-purple-500 mx-auto mb-6"></div>
-          <p className="text-violet-200 max-w-2xl mx-auto">
-            My professional journey and practical experiences that have shaped my skills.
-          </p>
+      <GlowingEffect spread={40} glow disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+      <div className="relative rounded-xl bg-[linear-gradient(180deg,rgba(15,21,32,0.96),rgba(8,11,17,0.96))] p-5 md:p-7">
+        <h3 className="text-xl font-semibold tracking-tight text-balance md:text-2xl">{h.title}</h3>
+        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-fg-muted text-pretty">{h.body}</p>
+        <div className="mt-6">
+          <Visual h={h} />
         </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-5xl mx-auto">
-          {/* Mobile timeline */}
-          <div className="lg:hidden space-y-8">
-            {experiences.map((exp) => (
-              <div key={exp.id} className="bg-black/20 backdrop-blur-lg rounded-lg p-6 shadow-lg border border-violet-500/20">
-                <span className="inline-block text-sm font-medium text-white bg-purple-700/80 px-3 py-1 rounded-full mb-4">
-                  {exp.startDate} - {exp.current ? "Present" : exp.endDate}
-                </span>
-                <h3 className="text-xl font-bold mb-1 text-white">{exp.title}</h3>
-                <div className="flex items-center text-violet-300 mb-4">
-                  <Briefcase className="h-4 w-4 mr-2" />
-                  <span>{exp.company}</span>
-                  <span className="mx-2">•</span>
-                  <span>{exp.location}</span>
-                </div>
-                <ul className="list-disc list-inside space-y-2 mb-4">
-                  {exp.description.map((item, i) => (
-                    <li key={i} className="text-violet-200">{item}</li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {exp.skills.map((skill, i) => (
-                    <span key={i} className="text-xs bg-violet-700/30 text-violet-100 px-2 py-1 rounded-full">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
+        {h.metric && h.visual !== "checks" ? (
+          <div className="mt-5 flex items-baseline gap-3 border-t border-line pt-4">
+            <span className="font-mono text-3xl font-semibold text-teal">{h.metric.value}</span>
+            <span className="text-sm text-fg-muted">{h.metric.label}</span>
           </div>
-          
-          {/* Desktop interactive timeline */}
-          <div className="hidden lg:block lg:col-span-12">
-            <div className="flex">
-              {/* Tab buttons */}
-              <div className="w-1/3 border-r border-violet-700/30 pr-4 space-y-1">
-                {experiences.map((exp) => (
-                  <button
-                    key={exp.id}
-                    onClick={() => setActiveTab(exp.id)}
-                    className={cn(
-                      "w-full text-left p-4 rounded-lg transition-colors",
-                      activeTab === exp.id 
-                        ? "bg-violet-700/30 border-l-4 border-violet-400"
-                        : "hover:bg-violet-800/20 text-violet-200"
-                    )}
-                  >
-                    <h3 className={cn(
-                      "font-medium mb-1",
-                      activeTab === exp.id ? "text-violet-100" : "text-violet-300"
-                    )}>
-                      {exp.title}
-                    </h3>
-                    <div className="flex items-center text-sm text-violet-300">
-                      <Briefcase className="h-3 w-3 mr-1" />
-                      <span>{exp.company}</span>
-                    </div>
-                    <div className="flex items-center text-xs text-violet-400 mt-1">
-                      <Calendar className="h-3 w-3 mr-1" />
-                      <span>{exp.startDate} - {exp.current ? "Present" : exp.endDate}</span>
-                    </div>
-                  </button>
-                ))}
-              </div>
-              
-              {/* Tab content */}
-              <div className="w-2/3 pl-8">
-                {experiences.map((exp) => (
-                  <div 
-                    key={exp.id} 
-                    className={cn(
-                      "transition-opacity duration-300",
-                      activeTab === exp.id ? "block opacity-100" : "hidden opacity-0"
-                    )}
-                  >
-                    <div className="bg-black/20 backdrop-blur-lg rounded-lg p-8 shadow-lg border border-violet-500/20">
-                      <h3 className="text-2xl font-bold mb-1 text-white">{exp.title}</h3>
-                      <div className="flex items-center text-violet-300 mb-6">
-                        <Briefcase className="h-4 w-4 mr-2" />
-                        <span>{exp.company}</span>
-                        <span className="mx-2">•</span>
-                        <span>{exp.location}</span>
-                      </div>
-                      
-                      <div className="space-y-4 mb-6">
-                        <h4 className="text-sm font-medium uppercase text-violet-400">Responsibilities & Achievements</h4>
-                        <ul className="space-y-3">
-                          {exp.description.map((item, i) => (
-                            <li key={i} className="flex items-start">
-                              <div className="mr-3 mt-1">
-                                <div className="h-2 w-2 bg-purple-500 rounded-full"></div>
-                              </div>
-                              <p className="text-violet-200">{item}</p>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <h4 className="text-sm font-medium uppercase text-violet-400 mb-3">Skills Used</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {exp.skills.map((skill, i) => (
-                            <span 
-                              key={i} 
-                              className="text-xs px-3 py-1 bg-violet-700/30 text-violet-100 rounded-full"
-                            >
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+        ) : null}
+      </div>
+    </motion.article>
+  );
+}
+
+export function Experience() {
+  const e = experience;
+  return (
+    <section id="experience" className="relative z-10 py-24 md:py-32">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <SectionHeading
+          method="GET"
+          path="/experience"
+          index="03 / 07"
+          title="Twelve months on a"
+          accent="multi-tenant healthcare platform."
+          lede={`${e.context} I worked on its REST APIs and PostgreSQL data layer, onsite, full-time.`}
+        />
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
+          className="panel grid gap-6 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8"
+        >
+          <div className="flex items-start gap-4">
+            <div className="grid h-14 w-14 shrink-0 place-items-center rounded-xl border border-teal/30 bg-teal/10 text-teal">
+              <Building2 className="h-6 w-6" />
+            </div>
+            <div>
+              <p className="text-2xl font-semibold tracking-tight">
+                {e.company} <span className="font-normal text-fg-dim">·</span>{" "}
+                <span className="font-serif font-normal italic text-fg-muted">{e.product}</span>
+              </p>
+              <p className="mt-1 text-fg-muted">{e.role}</p>
+              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[12px] text-fg-dim">
+                <span className="flex items-center gap-1.5">
+                  <CalendarRange className="h-3.5 w-3.5" /> {e.period}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="h-3.5 w-3.5" /> {e.location}
+                </span>
+                <span>{e.employment}</span>
               </div>
             </div>
           </div>
-        </div>
+          <div className="flex max-w-md flex-wrap gap-2 md:justify-end">
+            {e.stack.map((s) => (
+              <span key={s} className="chip">
+                {s}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+
+        <Timeline
+          className="mt-4"
+          data={e.highlights.map((h, i) => ({
+            id: h.id,
+            title: (
+              <div className="md:w-56">
+                <p className="font-mono text-[11px] text-fg-dim">commit {String(i + 1).padStart(2, "0")}</p>
+                <p className="mt-1 text-lg font-semibold tracking-tight text-fg md:text-2xl">{h.kicker}</p>
+              </div>
+            ),
+            content: <HighlightCard h={h} />,
+          }))}
+        />
       </div>
     </section>
   );

@@ -1,171 +1,109 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, Award, GraduationCap } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
+import { profile } from "@/content/profile";
+import { SectionHeading } from "@/components/section-heading";
+import { NumberTicker } from "@/components/ui/number-ticker";
+import { ScrollWords } from "@/components/ui/scroll-words";
+import { BorderBeam } from "@/components/ui/border-beam";
 
-export default function About() {
-  const stats = [
-    { label: "Projects Completed", value: "6+" },
-    { label: "Years of Experience", value: "2+" },
-    { label: "Coding Problems Solved", value: "150+" },
-  ];
-  
-  // Personal information
-  const aboutInfo = {
-    name: "Nanda Kishore R",
-    title: "Aspiring Software Engineer",
-    image: "/images/profile.jpg", 
-    bio: "I'm a versatile software engineer with experience in full stack development, machine learning, and enterprise Java applications. My passion lies in creating robust, scalable solutions that solve real-world problems while delivering exceptional user experiences.",
-    additionalInfo: "With over 2 years of project experience, I've developed a diverse technical portfolio spanning web applications, AI solutions, and Spring Boot microservices. I'm continuously expanding my skills through practical implementation and problem solving, having tackled 150+ challenges across various coding platforms. I'm particularly focused on the intersection of modern frontend frameworks, cloud architectures, and AI integration."
-  };
+const facts = [
+  { k: "service", v: "nanda-kishore" },
+  { k: "role", v: "backend engineer" },
+  { k: "region", v: "chennai, in" },
+  { k: "runtime", v: "java 17 · python" },
+  { k: "education", v: "BE ECE · 2026" },
+];
 
-  // Achievements and roles
-  const achievements = [
-    {
-      title: "Campus Ambassador – GeeksforGeeks",
-      period: "Apr 2024 – Apr 2025",
-      description: "Organized coding events, workshops, and hands-on Java & DSA sessions for 20+ students."
-    },
-    {
-      title: "3rd Place – Paper Presentation, Jeppiaar Institute of Technology",
-      period: "2024",
-      description: "Secured 3rd place for presenting innovative tech solution on 'AI in Power Stations'."
-    },
-    {
-      title: "ECE Department Drestein Student Coordinator – Saveetha Engineering College",
-      period: "2024",
-      description: "Led a 50-member team and assisted in planning & execution of Drestein 2024 tech fest."
-    },
-    {
-      title: "Hackathon Team Lead",
-      period: "2023 – 2024",
-      description: "Led multiple hackathon teams, coordinating development efforts and architecting solutions in time-constrained environments, resulting in successful project completions and valuable experience in rapid prototyping."
-    }
-  ];
-
-  // Certifications
-  const certifications = [
-    { name: "Programming in Java – NPTEL (IIT Kharagpur)" },
-    { name: "The Complete MySQL Bootcamp – Udemy" },
-    { name: "Introduction to Cloud Computing – IBM" }
-  ];
-
+function ServiceCard() {
   return (
-    <motion.section id="about" className="py-24">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
-          <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-          {/* Image column */}
-          <div className="order-2 lg:order-1">
-            <div className="relative">
-              {/* Main image with decorative elements */}
-              <div className="relative z-10 rounded-2xl overflow-hidden shadow-xl">
-                <Image
-                  src={aboutInfo.image}
-                  alt={aboutInfo.name}
-                  width={500}
-                  height={600}
-                  className="w-full h-auto object-cover"
-                  priority
-                />
-              </div>
-              
-              {/* Decorative elements */}
-              <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-primary rounded-2xl -z-10"></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-primary/5 rounded-full blur-3xl -z-20"></div>
-            </div>
-          </div>
-          
-          {/* Content column */}
-          <div className="order-1 lg:order-2">
-            <h3 className="text-2xl font-bold mb-2">{aboutInfo.name}</h3>
-            <p className="text-lg text-muted-foreground mb-6">{aboutInfo.title}</p>
-            <p className="mb-4">{aboutInfo.bio}</p>
-            <p className="mb-6">{aboutInfo.additionalInfo}</p>
-            
-            {/* Technologies section */}
-            <div className="mb-6">
-              <h4 className="text-sm uppercase tracking-wider text-muted-foreground mb-3">Technical Expertise</h4>
-              <div className="flex flex-wrap gap-2">
-                {["React", "Next.js", "Node.js", "Spring Boot", "TensorFlow", "Python", "Java", "MongoDB", "SQL", "Cloud Computing"].map((tech, i) => (
-                  <span key={i} className="px-3 py-1 bg-muted/30 rounded-full text-sm">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-            
-            {/* Statistics */}
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center p-4 bg-muted/20 rounded-lg">
-                  <div className="text-2xl font-bold text-primary mb-1">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-            
-            <a 
-              href="#contact" 
-              className="inline-flex items-center text-sm font-medium text-primary hover:underline"
-            >
-              Get in touch
-              <ArrowRight className="ml-1 h-4 w-4" />
-            </a>
-          </div>
-        </div>
-        
-        {/* Achievements and Certifications Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-20">
-          {/* Achievements */}
-          <div>
-            <div className="flex items-center mb-6">
-              <Award className="h-6 w-6 text-primary mr-3" />
-              <h3 className="text-2xl font-bold">Achievements & Roles</h3>
-            </div>
-            
-            <div className="space-y-8">
-              {achievements.map((achievement, index) => (
-                <div key={index} className="relative pl-8 border-l-2 border-muted">
-                  <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-primary"></div>
-                  <h4 className="font-semibold text-lg">{achievement.title}</h4>
-                  <p className="text-sm text-muted-foreground mb-2">{achievement.period}</p>
-                  <p>{achievement.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Certifications */}
-          <div>
-            <div className="flex items-center mb-6">
-              <GraduationCap className="h-6 w-6 text-primary mr-3" />
-              <h3 className="text-2xl font-bold">Certifications</h3>
-            </div>
-            
-            <div className="space-y-4">
-              {certifications.map((cert, index) => (
-                <div 
-                  key={index} 
-                  className="p-4 border border-muted rounded-lg hover:border-primary transition-colors"
-                >
-                  <div className="flex items-center">
-                    <div className="bg-muted/30 p-2 rounded-full mr-4">
-                      <GraduationCap className="h-5 w-5 text-primary" />
-                    </div>
-                    <p className="font-medium">{cert.name}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+    <motion.div
+      initial={{ opacity: 0, y: 40, rotate: -2 }}
+      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+      className="panel relative overflow-hidden p-3"
+    >
+      <div className="group relative aspect-square overflow-hidden rounded-xl">
+        <Image
+          src={profile.photo}
+          alt={`Portrait of ${profile.name}`}
+          fill
+          sizes="(min-width: 1024px) 380px, 90vw"
+          className="object-cover grayscale-[65%] transition duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
+          priority={false}
+        />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(5,7,11,0.18)_50%)] bg-[length:100%_4px] mix-blend-multiply" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/85 via-transparent to-transparent" />
+        <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full border border-line-strong bg-bg/70 px-2.5 py-1 font-mono text-[11px] backdrop-blur-md">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inset-0 animate-pulse-ring rounded-full bg-green/70" />
+            <span className="relative h-2 w-2 rounded-full bg-green" />
+          </span>
+          status: healthy
         </div>
       </div>
-    </motion.section>
+      <dl className="mt-3 grid gap-1.5 px-1.5 pb-1.5 font-mono text-[12px]">
+        {facts.map((f) => (
+          <div key={f.k} className="flex items-baseline justify-between gap-4 border-b border-dashed border-line pb-1.5 last:border-0">
+            <dt className="text-fg-dim">{f.k}</dt>
+            <dd className="text-right text-fg">{f.v}</dd>
+          </div>
+        ))}
+      </dl>
+      <BorderBeam size={120} duration={9} colorFrom="#5eead4" colorTo="#a78bfa" />
+    </motion.div>
+  );
+}
+
+export function About() {
+  return (
+    <section id="about" className="relative z-10 py-24 md:py-32">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <SectionHeading
+          method="GET"
+          path="/about"
+          index="02 / 07"
+          title="I build the layer"
+          accent="that has to be right."
+        />
+
+        <div className="grid items-start gap-12 lg:grid-cols-[1fr_380px] lg:gap-16">
+          <div>
+            <ScrollWords
+              text={profile.summary}
+              highlights={["PostgreSQL", "concurrency", "row-level", "transactional", "Java", "Spring", "Python", "FastAPI."]}
+              className="text-2xl font-medium leading-[1.35] tracking-tight md:text-[2.1rem]"
+            />
+
+            <div className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-4">
+              {profile.stats.map((s, i) => (
+                <motion.div
+                  key={s.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ delay: 0.08 * i, duration: 0.6 }}
+                  className="bg-bg/85 p-5 backdrop-blur-md md:p-6"
+                >
+                  <p className="font-mono text-3xl font-semibold tracking-tight md:text-4xl">
+                    {"prefix" in s ? <span className="text-fg-dim">{s.prefix}</span> : null}
+                    <NumberTicker value={s.value} className="tracking-tight text-fg" />
+                  </p>
+                  <p className="mt-2 text-[13px] leading-snug text-fg-muted">{s.label}</p>
+                </motion.div>
+              ))}
+            </div>
+            <p className="mt-3 font-mono text-[11px] text-fg-dim">
+              Counts are from my 12 months at Botcode (HealthPilot.ai).
+            </p>
+
+          </div>
+
+          <ServiceCard />
+        </div>
+      </div>
+    </section>
   );
 }

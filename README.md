@@ -1,34 +1,54 @@
-A cosmic-themed personal portfolio website built with Next.js 15, Three.js, and Tailwind CSS, featuring interactive 3D elements, smooth animations, and responsive design.
+# nandakishorer.vercel.app
 
+Portfolio of **Nanda Kishore R**, Software Engineer (Backend): Java 17 / Spring Boot, Python / FastAPI, PostgreSQL.
 
-## ✨ Features
+The page is built as a request travelling through a backend. A fixed 3D service topology
+(client → REST API → auth → services → PostgreSQL → outbox → RabbitMQ → worker) sits behind the
+content, and the camera flies from node to node as you scroll: `/about`, `/experience`,
+`/projects`, `/stack`, `/education`, then back to the client for `POST /contact`.
 
-> Cosmic UI Theme - Immersive space-themed design with animated star background
+- **Case studies** for SkillBridge and Integronix at `/projects/<slug>`, with animated
+  architecture diagrams and interactive figures (a broker-outage replay, the 10-node pipeline, a
+  query-budget chart).
+- **A real endpoint**: `curl -s https://nandakishorer.vercel.app/api/whoami`
 
-> Interactive 3D Tech Stack - Rotating tech logos powered by Three.js
+## Stack
 
-> Responsive Design - Optimized for all device sizes
+- Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4
+- React Three Fiber, drei and postprocessing for the 3D topology
+- Motion for scroll-linked and entrance animations; Lenis for smooth scrolling
+- Components adapted from 21st.dev, Aceternity UI and Magic UI (credits below)
 
-> Dynamic Project Showcase - Filterable project cards with detailed modal views
+## Editing content
 
-> Contact Form - Integrated with Formspree for easy messaging
+All copy lives in `src/content/`:
 
-. Resume Download - Direct PDF download functionality
+| File | What it holds |
+|---|---|
+| `profile.ts` | name, links, tagline, summary, headline stats, the `/api/whoami` payload, `open_to_work` |
+| `experience.ts` | Botcode / HealthPilot.ai highlights |
+| `projects.ts` | project cards and the full case-study content |
+| `skills.ts` | the stack layers |
+| `education.ts` | degree, achievements, certifications |
 
-> Smooth Animations - Using Framer Motion for delightful UI interactions
+Every number on the site comes from the resume in `public/Nanda_Kishore_Resume.pdf`, or from the
+project's own verified notes.
 
-> Dark Mode Optimized - Beautiful cosmic visuals against dark backgrounds
+## Develop
 
-## 🛠️ Technologies
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run lint
+npm run build
+```
 
-> Frontend: Next.js 15, React, TypeScript
+## Credits
 
-> 3D Rendering: Three.js, React Three Fiber, Drei
+- Radial Orbital Timeline, by Jatin Yadav (21st.dev, MIT)
+- Inversion Circle Scroll Animation, by ajith66310 (21st.dev, MIT)
+- Timeline, Glowing Effect and Container Scroll, from Aceternity UI
+- Terminal, Number Ticker, Border Beam, Marquee, Hyper Text and Scroll Progress, from Magic UI
+- Icons: Lucide, Simple Icons
 
-> Styling: Tailwind CSS
-
-> Animation: Framer Motion
-
-> Form Handling: Formspree
-
-> Deployment: Vercel
+Each adapted component notes its source and the changes at the top of its file in `src/components/ui/`.
